@@ -391,7 +391,7 @@ export default function App() {
     openTimerRef.current = window.setTimeout(() => openUrl(url, newTab), 220);
   };
 
-  const editBookmark = (folderId: string, item: SavedItem, trigger: HTMLButtonElement) => {
+  const editBookmark = (folderId: string, item: SavedItem, trigger: HTMLElement) => {
     if (openTimerRef.current) window.clearTimeout(openTimerRef.current);
     const rect = trigger.getBoundingClientRect();
     const width = 370;
@@ -833,6 +833,11 @@ export default function App() {
                     }}
                     onDrop={(event) => dropIntoFolder(folder.id, event, item.id, dropTarget?.position === 'after' ? 'after' : 'before')}
                     onClick={(event) => !isInlineEditing && openSavedBookmark(folder.id, item, event.metaKey || event.ctrlKey)}
+                    onContextMenu={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      if (!isInlineEditing) editBookmark(folder.id, item, event.currentTarget);
+                    }}
                     onDoubleClick={(event) => { event.preventDefault(); startInlineBookmarkEdit(folder.id, item); }}
                     onKeyDown={(event) => { if (event.key === 'Enter' && !isInlineEditing) openSavedBookmark(folder.id, item, event.metaKey || event.ctrlKey); }}
                     title="Double-click the name to rename"
