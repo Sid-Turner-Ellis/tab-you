@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily" # Required but not relevant for security updates
+    open-pull-requests-limit: 0 # Disable general package version updates - way too noisy
+    commit-message:
+      prefix: "NOJIRA: dependabot security - "
